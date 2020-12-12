@@ -13,9 +13,12 @@ public class SparkJob {
     private static final int ARRDELAY = 17;
     private static final String NULLSRING = "";
     private static final float ZERO = 0.0f;
+
     private static final int DESTAIRPORTIDFORNAMES= 0;
-    private static final int ORIGINALAIRPORTID = 11;
+    private static final int DESTAIRPORTIDFORDELAYS = 14;
     
+    private static final int ORIGINALAIRPORTID = 11;
+
 
     public static void main(){
         SparkConf conf = new SparkConf().setAppName("lab5");
