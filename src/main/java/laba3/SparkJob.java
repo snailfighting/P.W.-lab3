@@ -4,6 +4,7 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import scala.Tuple2;
 
 public class SparkJob {
     private static final String NAMEDILIMETR = "\",";
@@ -12,15 +13,24 @@ public class SparkJob {
     private static final int ARRDELAY = 17;
     private static final String NULLSRING = "";
     private static final float ZERO = 0.0f;
+    private static final int DESTAIRPORTIDFORNAMES= 0;
 
     public static void main(){
         SparkConf conf = new SparkConf().setAppName("lab5");
         JavaSparkContext sc = new JavaSparkContext(conf);
 
-        JavaRDD<String> AirportNames = sc.textFile("L_AIRPORT_ID.csv");
-        JavaRDD<String> AirportDelays = sc.textFile("664600583_T_ONTIME_sample.csv");
+        JavaRDD<String> airportNames = sc.textFile("L_AIRPORT_ID.csv");
+        JavaRDD<String> airportDelays = sc.textFile("664600583_T_ONTIME_sample.csv");
 
-        JavaPairRDD<Integer, Integer>, 
+        JavaPairRDD<Integer, String> airportNameData =
+                airportNames
+                .filter(str -> str.contains("Code")).mapToPair(value ->{
+                    String[] table = value.split(NAMEDILIMETR);
+                    Integer airportID = Integer.valueOf(table[DESTAIRPORTIDFORNAMES]
+                            .replaceAll("\"", ""));
+                    return  new Tuple2<>(airportID, table[NAMEAIRPORT]);
+                });
+        //.....//
 
     }
 }
