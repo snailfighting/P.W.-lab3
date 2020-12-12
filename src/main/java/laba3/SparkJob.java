@@ -12,7 +12,7 @@ public class SparkJob {
     private static final int NAMEAIRPORT = 1;
     private static final int ARRDELAY = 17;
     private static final int CANCELLED = 19;
-    
+
     private static final String NULLSRING = "";
     private static final float ZERO = 0.0f;
 
