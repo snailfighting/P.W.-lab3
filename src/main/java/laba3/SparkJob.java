@@ -9,6 +9,7 @@ public class SparkJob {
         SparkConf conf = new SparkConf().setAppName("lab5");
         JavaSparkContext sc = new JavaSparkContext(conf);
 
-        JavaRDD<String> AirportNames = sc.textFile("")
+        JavaRDD<String> AirportNames = sc.textFile("L_AIRPORT_ID.csv");
+        JavaRDD<String> AirportDelays = sc.textFile("")
     }
 }
