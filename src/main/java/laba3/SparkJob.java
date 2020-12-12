@@ -7,5 +7,7 @@ public class SparkJob {
     public static void main(){
         SparkConf conf = new SparkConf().setAppName("lab5");
         JavaSparkContext sc = new JavaSparkContext(conf);
+
+        JDD<
     }
 }
