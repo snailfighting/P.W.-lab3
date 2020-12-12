@@ -11,12 +11,14 @@ public class SparkJob {
     private static final String DELAYDElIMETR = ",";
     private static final int NAMEAIRPORT = 1;
     private static final int ARRDELAY = 17;
+    private static final int CANCELLED = 19;
+    
     private static final String NULLSRING = "";
     private static final float ZERO = 0.0f;
 
     private static final int DESTAIRPORTIDFORNAMES= 0;
     private static final int DESTAIRPORTIDFORDELAYS = 14;
-    
+
     private static final int ORIGINALAIRPORTID = 11;
 
 
