@@ -17,5 +17,5 @@ public class FlightSerializable implements Serializable {
         this.cancelled = cancelled;
         this.originalAirportID = originalAirportID;
     }
-    public float getAir
+    public float getArrDelay()
 }
