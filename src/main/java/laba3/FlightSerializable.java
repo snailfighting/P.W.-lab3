@@ -18,6 +18,15 @@ public class FlightSerializable implements Serializable {
         this.originalAirportID = originalAirportID;
     }
     public float getArrDelay(){
-        
+        return arrDelay;
+    }
+    public float getCancelled(){
+        return cancelled;
+    }
+    public int getAirportID(){
+        return airportID;
+    }
+    public int getOriginalAirportID(){
+        return originalAirportID;
     }
 }
