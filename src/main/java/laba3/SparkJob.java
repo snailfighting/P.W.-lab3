@@ -72,10 +72,10 @@ public class SparkJob {
                                 p.getCancelled() != ZERO),
                         FlightSerializablCount :: add);
 
-        JavaPairRDD<Tuple2<Integer, Integer>, String> flSerCountStr = flightSerCounts.
-                mapToPair(value ->{
+        JavaPairRDD<Tuple2<Integer, Integer>, String> flSerCountStr = flightSerCounts
+                .mapToPair(value -> {
                     value._2();
-                    return new Tuple2<> (value._1(), FlightSerializablCount.toOutString(value._2)));
+                    return new Tuple2<>(value._1(),FlightSerializablCount.toOutString(value._2()));
                 });
 
         final Broadcast<Map<Integer, String>> broadcast = sc.broadcast(airportNameData.collectAsMap());
