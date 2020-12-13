@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class FlightSerializablCount implements Serializable {
     public FlightSerializablCount() {}
+    
     private float maxArrDelay;
     private int delayCount;
     private int flightCount;
