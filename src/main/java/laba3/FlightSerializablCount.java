@@ -31,8 +31,17 @@ public class FlightSerializablCount implements Serializable {
     public static FlightSerializablCount addValue(FlightSerializablCount a, float maxArrDelay, boolean delayed, boolean cancelled){
         return new FlightSerializablCount(a.getFlightCount() + 1,
                 delayed ? a.getDelayCount() + 1 : a.getDelayCount(),
-                Math.max(a.getMaxArrDelay(), maxArrDelay),
+                (int) Math.max(a.getMaxArrDelay(), maxArrDelay), //??
                 cancelled ? a.getCancelledCount() + 1 : a.getCancelledCount());
     }
-    
+
+    public static FlightSerializablCount add(FlightSerializablCount a, FlightSerializablCount b){
+        return new FlightSerializablCount(a.getFlightCount() + b.getFlightCount(),
+                a.getDelayCount() + b.getDelayCount(),
+                (int) Math.max(a.getMaxArrDelay(), b.getMaxArrDelay()), //??
+                a.getCancelledCount() + b.getCancelledCount());
+    }
+
+    public static String toOutString(FlightSerializablCount a){
+    }
 }
