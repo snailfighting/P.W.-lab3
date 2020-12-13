@@ -43,6 +43,13 @@ public class FlightSerializablCount implements Serializable {
     }
 
     public static String toOutString(FlightSerializablCount a){
-        
+        float delaysPercend = (float) a.getDelayCount() / a.getFlightCount() * 100;
+        float cancelledPercend = (float) a.getCancelledCount() / a.getFlightCount() * 100;
+        return "INF : {MAX DELAY: " + a.getMaxArrDelay() +
+                "; FLIGHTS : " + a.getFlightCount() +
+                "; DELAYS : " + a.getDelayCount() +
+                "; CANCELLED : " + a.getCancelledCount() +
+                "}; % DELAYS = " + delaysPercend +
+                " % CANCELLED = " + cancelledPercend;
     }
 }
