@@ -37,7 +37,7 @@ public class SparkJob {
                             .replaceAll("\"", ""));
                     return  new Tuple2<>(airportID, table[NAMEAIRPORT]);
                 });
-        //.....//
+        
 
     }
 }
