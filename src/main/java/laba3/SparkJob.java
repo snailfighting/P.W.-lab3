@@ -56,18 +56,24 @@ public class SparkJob {
                             float arrDelay = checkNull(table[ARRDELAY]);
                             float cancelled = Float.parseFloat(table[CANCELLED]);
                             return new Tuple2<>(new Tuple2<>(originalAirportID, airportID),
-                                    new FlightSerializablCount(airportID, originalAirportID, arrDelay, cancelled));
+                                    new FlightSerializable(airportID, originalAirportID, arrDelay, cancelled));
                         });
-        JavaPairRDD<Tuple2<Integer, Integer>, FlightSerializablCount> flightSerCount =
+        JavaPairRDD<Tuple2<Integer, Integer>, FlightSerializablCount> flightSerCounts =
                 airportDelaysData.combineByKey(p -> new FlightSerializablCount(1,
                                 p.getArrDelay() > ZERO ? 1 : 0,
                                 p.getArrDelay(),
                                 p.getCancelled() == ZERO ? 0 : 1),
-                                (flightSerCount,p) -> FlightSerializable.addValue(flightSerCount,
+                                (flightSerCount,p) -> FlightSerializablCount.addValue(flightSerCount,
                                      p.getArrDelay(),
                                         p.getArrDelay() != ZERO,
                                 p.getCancelled() != ZERO),
                         FlightSerializablCount :: add);
+
+        JavaPairRDD<Tuple2<Integer, Integer>, String> flSerCountStr = flightSerCounts.
+                mapToPair(value ->{
+                    value._2();
+                    return new Tuple2<>(value._1(), FlightSerializablCount.toOutString(value._2))));
+                });
 
     }
 }
