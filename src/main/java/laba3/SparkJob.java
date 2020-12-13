@@ -31,13 +31,13 @@ public class SparkJob {
 
         JavaPairRDD<Integer, String> airportNameData =
                 airportNames
-                .filter(str -> str.contains("Code")).mapToPair(value ->{
+                .filter(str -> !str.contains("Code")).mapToPair(value ->{
                     String[] table = value.split(NAMEDILIMETR);
                     Integer airportID = Integer.valueOf(table[DESTAIRPORTIDFORNAMES]
                             .replaceAll("\"", ""));
                     return  new Tuple2<>(airportID, table[NAMEAIRPORT]);
                 });
-        
+
 
     }
 }
