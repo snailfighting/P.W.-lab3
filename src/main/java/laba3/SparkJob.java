@@ -75,8 +75,9 @@ public class SparkJob {
         JavaPairRDD<Tuple2<Integer, Integer>, String> flSerCountStr = flightSerCounts.
                 mapToPair(value ->{
                     value._2();
-                    return new Tuple2<>(value._1(), FlightSerializablCount.toOutString(value._2))));
+                    return new Tuple2<> (value._1(), FlightSerializablCount.toOutString(value._2)));
                 });
+
         final Broadcast<Map<Integer, String>> broadcast = sc.broadcast(airportNameData.collectAsMap());
 
         JavaRDD<String> out = flSerCountStr.map(value ->{
@@ -89,6 +90,6 @@ public class SparkJob {
 
         });
 
-        
+        out.saveAsTextFile("hdfs://localhost:9000/user/milena/output");
     }
 }
