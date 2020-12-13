@@ -5,6 +5,7 @@ import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import scala.Tuple2;
+import scala.reflect.internal.InfoTransformers;
 
 public class SparkJob {
     private static final String NAMEDILIMETR = "\",";
@@ -22,6 +23,14 @@ public class SparkJob {
     private static final int ORIGINALAIRPORTID = 11;
 
 
+    private static float checkNull(String current){
+        if (current.equals(NULLSRING)){
+            return ZERO;
+        }else{
+            return Float.parseFloat(current);
+        }
+    }
+
     public static void main(){
         SparkConf conf = new SparkConf().setAppName("lab5");
         JavaSparkContext sc = new JavaSparkContext(conf);
@@ -37,7 +46,28 @@ public class SparkJob {
                             .replaceAll("\"", ""));
                     return  new Tuple2<>(airportID, table[NAMEAIRPORT]);
                 });
-
+        JavaPairRDD<Tuple2<Integer, Integer>, FlightSerializable> airportDelaysData =
+                airportDelays.
+                        filter(str -> !str.contains("YEAR")).
+                        mapToPair(value -> {
+                            String[] table = value.split(DELAYDElIMETR);
+                            int airportID = Integer.parseInt(table[DESTAIRPORTIDFORDELAYS]);
+                            int originalAirportID = Integer.parseInt(table[ORIGINALAIRPORTID]);
+                            float arrDelay = checkNull(table[ARRDELAY]);
+                            float cancelled = Float.parseFloat(table[CANCELLED]);
+                            return new Tuple2<>(new Tuple2<>(originalAirportID, airportID),
+                                    new FlightSerializablCount(airportID, originalAirportID, arrDelay, cancelled));
+                        });
+        JavaPairRDD<Tuple2<Integer, Integer>, FlightSerializablCount> flightSerCount =
+                airportDelaysData.combineByKey(p -> new FlightSerializablCount(1,
+                                p.getArrDelay() > ZERO ? 1 : 0,
+                                p.getArrDelay(),
+                                p.getCancelled() == ZERO ? 0 : 1),
+                                (flightSerCount,p) -> FlightSerializable.addValue(flightSerCount,
+                                     p.getArrDelay(),
+                                        p.getArrDelay() != ZERO,
+                                p.getCancelled() != ZERO),
+                        FlightSerializablCount :: add);
 
     }
 }
