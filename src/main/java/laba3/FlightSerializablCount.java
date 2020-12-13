@@ -9,7 +9,7 @@ public class FlightSerializablCount implements Serializable {
     private int flightCount;
     private int cancelledCount;
 
-    public FlightSerializablCount(int cancelledCount, int delayCount, int flightCount, float maxArrDelay){
+    public FlightSerializablCount(int flightCount, int delayCount, float maxArrDelay, int cancelledCount){
         this.cancelledCount = cancelledCount;
         this.delayCount = delayCount;
         this.flightCount = flightCount;
@@ -31,14 +31,14 @@ public class FlightSerializablCount implements Serializable {
     public static FlightSerializablCount addValue(FlightSerializablCount a, float maxArrDelay, boolean delayed, boolean cancelled){
         return new FlightSerializablCount(a.getFlightCount() + 1,
                 delayed ? a.getDelayCount() + 1 : a.getDelayCount(),
-                (int) Math.max(a.getMaxArrDelay(), maxArrDelay), //??
+                Math.max(a.getMaxArrDelay(), maxArrDelay), //??
                 cancelled ? a.getCancelledCount() + 1 : a.getCancelledCount());
     }
 
     public static FlightSerializablCount add(FlightSerializablCount a, FlightSerializablCount b){
         return new FlightSerializablCount(a.getFlightCount() + b.getFlightCount(),
                 a.getDelayCount() + b.getDelayCount(),
-                (int) Math.max(a.getMaxArrDelay(), b.getMaxArrDelay()), //??
+                Math.max(a.getMaxArrDelay(), b.getMaxArrDelay()), //??
                 a.getCancelledCount() + b.getCancelledCount());
     }
 
