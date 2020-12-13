@@ -43,5 +43,6 @@ public class FlightSerializablCount implements Serializable {
     }
 
     public static String toOutString(FlightSerializablCount a){
+        
     }
 }
