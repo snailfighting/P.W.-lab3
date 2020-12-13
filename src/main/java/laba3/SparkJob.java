@@ -4,8 +4,11 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.broadcast.Broadcast;
 import scala.Tuple2;
 import scala.reflect.internal.InfoTransformers;
+
+import java.util.Map;
 
 public class SparkJob {
     private static final String NAMEDILIMETR = "\",";
@@ -74,6 +77,7 @@ public class SparkJob {
                     value._2();
                     return new Tuple2<>(value._1(), FlightSerializablCount.toOutString(value._2))));
                 });
-
+        final Broadcast<Map<Integer, String>> broadcast = sc.broadcast(airportNameData.collectAsMap());
+        
     }
 }
