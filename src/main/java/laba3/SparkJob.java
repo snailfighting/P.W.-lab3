@@ -78,6 +78,17 @@ public class SparkJob {
                     return new Tuple2<>(value._1(), FlightSerializablCount.toOutString(value._2))));
                 });
         final Broadcast<Map<Integer, String>> broadcast = sc.broadcast(airportNameData.collectAsMap());
+
+        JavaRDD<String> out = flSerCountStr.map(value ->{
+            Map<Integer, String> airport_Names = broadcast.value();
+
+            String startAirportsName = airport_Names.get(value._1()._1());
+            String finishAirportsName = airport_Names.get(value._1()._2());
+
+            return startAirportsName + "-->" + finishAirportsName + ">>>>>" + value._2();
+
+        });
+
         
     }
 }
